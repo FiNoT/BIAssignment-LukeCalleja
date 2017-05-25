@@ -1,0 +1,208 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="4C2C5A22-2799-8021-BA37-843892ED4621" name="CLIENT">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:56:23 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Client Key" id="EB78ED3E-9F15-C0F7-E32D-5707BFCF2282">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:56:39 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="First Name" id="1242C612-7D35-6517-F4E2-57C79FCD41BB">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:56:58 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Last Name" id="4CF95BE0-73F1-781B-72A8-D61192909B69">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:59:37 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Country" id="2DADAE96-5B37-C63F-4088-6E7387C0052B">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:59:47 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Region" id="AD02E130-AABC-F744-8B2A-58967C5B1ABA">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:59:59 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="City" id="ED09E189-601E-F3D0-1E16-7F8588FAD9F8">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:00:25 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Gender" id="AFF63D22-858A-059A-A467-2D727DD9F99A">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:00:41 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Age" id="00EF6E02-1723-D195-B858-9F745ADBAECE">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:00:59 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<ownDataTypeParameters>,3,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="From Date" id="72241783-4282-057C-9D2F-555BC5382694">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:01:18 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="To Date" id="8A7B0DCE-22AA-F5B4-48B4-0F23FAC11F1F">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:01:50 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="MaritialStatus" id="0390D2FC-143F-D8E9-D201-BE98A2041ECA">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:02:06 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Client ID" id="5C7CF10A-25FA-A289-5C4C-4D4CB33218EC">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:03:10 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="908EEBCA-7708-03ED-5013-9495935335F5" name="CLIENT PK">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:03:38 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>EB78ED3E-9F15-C0F7-E32D-5707BFCF2282</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="4BB63785-9CCE-2CE9-24B2-828604B84185" name="Client Natural Key">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:14:17 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<newElementsIDs>72241783-4282-057C-9D2F-555BC5382694</newElementsIDs>
+<usedAttributes>
+<attributeRef>72241783-4282-057C-9D2F-555BC5382694</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="5160323E-DCC6-087C-0327-8888BF802D31" name="Client OLTP ID">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:15:09 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<newElementsIDs>5C7CF10A-25FA-A289-5C4C-4D4CB33218EC</newElementsIDs>
+<usedAttributes>
+<attributeRef>5C7CF10A-25FA-A289-5C4C-4D4CB33218EC</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Star Schema ERD" id="0D05C189-B55B-9D21-7FB2-FB54BD458628" version="3.5">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 12:46:19 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>0D05C189-B55B-9D21-7FB2-FB54BD458628</designId>
+</OSDM_Design>

@@ -1,0 +1,133 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="03E5540F-26FA-ADA5-167F-447CA88E32DA" name="LOCATION">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:15:31 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Location Key" id="E031C050-3392-8884-9A52-EAA40814922A">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:15:40 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Country" id="FEFA9B8B-B4F5-EDA1-614A-341ACF1D4936">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:15:49 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Region" id="BB195433-FB82-312F-23B9-90DF9A9D3C6D">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:16:02 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="City" id="EB8AFA62-42E8-4F38-F4A4-B940A8487E8F">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:16:17 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Store Name" id="D1D3574C-9DFE-E084-CEC4-C681B79CAC5D">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:16:27 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT037</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Location ID" id="BD223191-8657-4A6C-F276-1A3AAE7F8635">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:20:14 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="3AA377E7-4BD3-79F5-1505-F872DC0D30C2" name="LOCATION PK">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:15:49 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E031C050-3392-8884-9A52-EAA40814922A</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="758496EC-4D84-EBB8-AC17-F4EE60BAFB10" name="Location Natural Key">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:31:14 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<newElementsIDs>D1D3574C-9DFE-E084-CEC4-C681B79CAC5D</newElementsIDs>
+<usedAttributes>
+<attributeRef>D1D3574C-9DFE-E084-CEC4-C681B79CAC5D</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="0359C833-64E0-A25A-A470-D6C6F0D07394" name="Location OLTP ID">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:31:57 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<newElementsIDs>BD223191-8657-4A6C-F276-1A3AAE7F8635</newElementsIDs>
+<usedAttributes>
+<attributeRef>BD223191-8657-4A6C-F276-1A3AAE7F8635</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

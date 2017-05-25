@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D2AD6D03-412F-AC05-31B0-A345115A0EAB" name="ORDER FACT">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:32:20 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Order Fact Key" id="6C6CED09-B236-A7A5-83FD-4506FF8C4E14">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:32:26 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Order Date" id="D9F88F6E-068F-D47D-A271-0F12C214AD36">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:32:36 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Order Total" id="466F9EED-37AC-D414-7B34-2F9E21451C1D">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:33:02 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,6,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Order ID" id="AB84C721-8026-2D33-2947-B7CBE8C4A5EB">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:34:46 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Client Key" id="0A8316CC-B068-670B-615E-F90C421C2F13">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:35:50 UTC</createdTime>
+<generatorID>3F1F1B3A-1E04-8855-CC72-A012047BF661</generatorID>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<referedAttribute>EB78ED3E-9F15-C0F7-E32D-5707BFCF2282</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Location Key" id="DE347839-330D-CC3A-AC3F-3E11329B643F">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:36:00 UTC</createdTime>
+<generatorID>4F9C078A-02C0-F6B9-1431-77F99491737B</generatorID>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<referedAttribute>E031C050-3392-8884-9A52-EAA40814922A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Date Key" id="BBC479A2-E473-D0D8-9A9A-A0F8C70569DE">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:36:03 UTC</createdTime>
+<generatorID>D7275590-D554-08DA-C18E-803A937BEE72</generatorID>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<referedAttribute>B778FC26-EDDC-0923-5631-D6F4A88C856F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="F29AEE01-C359-E20F-EB6A-A5F33C62D4AD" name="ORDER FACT PK">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:32:35 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>6C6CED09-B236-A7A5-83FD-4506FF8C4E14</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="9B7819D5-67B9-1D6D-CC59-D0A4CE72A776" name="Order OLTP ID">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-25 13:35:25 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<newElementsIDs>AB84C721-8026-2D33-2947-B7CBE8C4A5EB</newElementsIDs>
+<usedAttributes>
+<attributeRef>AB84C721-8026-2D33-2947-B7CBE8C4A5EB</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
