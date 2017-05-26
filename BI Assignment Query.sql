@@ -4,6 +4,7 @@ DROP TABLE [orderStar].[orderFact];
 DROP TABLE [orderStar].[client];
 DROP TABLE [orderStar].[date];
 DROP TABLE [orderStar].[location];
+DROP PROCEDURE [orderStar].[sp_addClient];
 DROP SCHEMA [orderStar];
 GO
 
@@ -114,8 +115,34 @@ CREATE TABLE [orderStar].[orderFact]
 	, clieKey UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_CLIENT_key REFERENCES [orderStar].[client] (clientKey)
 	, ordID UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_otp_id UNIQUE
 );
+GO
 
 -- ETL
+
+-- Procedure for client entry/gathering
+CREATE PROCEDURE [orderStar].[sp_addClient]
+	(@firstName NVARCHAR(50), @lastName NVARCHAR(50), @country NVARCHAR(100), @region NVARCHAR(50), @city NVARCHAR(100), @gender CHAR(1), @age NUMERIC(3,0), @maritalStatus CHAR(1), @orderDate DATE, @clientId UNIQUEIDENTIFIER)
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		IF(NOT EXISTS (SELECT	clientKey
+						FROM	[orderStar].[client]
+						WHERE	country = @country AND region = @region AND city = @city AND gender = @gender
+								AND age = @age AND maritialStatus = @maritalStatus AND clientID = @clientId))
+		BEGIN
+			UPDATE		[orderStar].[client]
+				SET		toDate = DATEADD(DAY, -1, @orderDate)
+				WHERE	clientID = @clientId AND toDate IS NULL;
+
+			INSERT [orderStar].[client] 
+				(firstName, lastName, country, region, city, gender, age, maritialStatus, fromDate, toDate, clientID)
+			VALUES 
+				(@firstName, @lastName, @country, @region, @city, @gender, @age, @maritalStatus, @orderDate, NULL, @clientId)
+		END;
+	END;
+GO
+
 BEGIN
 	SET NOCOUNT ON;
 
@@ -124,10 +151,62 @@ BEGIN
 	(SELECT DISTINCT DATEPART(YEAR, orderDate), DATEPART(QUARTER, orderDate), DATEPART(MONTH, orderDate), DATEPART(DAY, orderDate),  DATEPART(WEEKDAY, orderDate), CAST(orderDate AS DATE) FROM [oltp].[order]);
 
 	-- CLIENT
-	INSERT INTO [orderStar].[client] (firstName, lastName, country, region, city, gender, age, fromDate, toDate, maritialStatus, clientID)
-	(
+	DECLARE clientCursor CURSOR FOR
+		SELECT		cli.firstName
+					, cli.lastName
+					, cou.countryName
+					, reg.regionName
+					, cty.cityName
+					, cli.gender
+					, DATEDIFF(year, cli.dateOfBirth, ord.orderDate) -- to get age of client				
+					, cli.maritialStatus
+					, ord.orderDate
+					, cli.clientId
+		FROM		[oltp].[client] cli
+					JOIN
+					[oltp].[city] cty
+					ON
+					cli.cityId = cty.cityId
+					JOIN
+					[oltp].[region] reg
+					ON
+					cty.regionId = reg.regionId
+					JOIN
+					[oltp].[country] cou
+					ON
+					reg.countryId = cou.countryId
+					JOIN
+					[oltp].[order] ord
+					ON
+					ord.clientId = cli.clientId
+		ORDER BY	ord.orderDate
 
-	);
+	DECLARE @firstName NVARCHAR(50);
+	DECLARE @lastName NVARCHAR(50);
+	DECLARE @country NVARCHAR(100);
+	DECLARE @region NVARCHAR(50);
+	DECLARE @city NVARCHAR(100);
+	DECLARE @gender CHAR(1);
+	DECLARE @age NUMERIC(3,0);
+	DECLARE @maritalStatus CHAR(1);
+	DECLARE @orderDate DATE;
+	DECLARE @clientId UNIQUEIDENTIFIER;
+
+	-- get the first client from the cursor
+	OPEN clientCursor
+		FETCH NEXT FROM clientCursor INTO @firstName, @lastName, @country, @region, @city, @gender, @age, @maritalStatus, @orderDate, @clientId;
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		-- Execute the stored procedure for insertion
+		EXEC [orderStar].[sp_addClient] @firstName, @lastName, @country, @region, @city, @gender, @age, @maritalStatus, @orderDate, @clientId
+
+		-- move on to the next row
+		FETCH NEXT FROM clientCursor INTO @firstName, @lastName, @country, @region, @city, @gender, @age, @maritalStatus, @orderDate, @clientId;
+	END;
+
+	CLOSE clientCursor;
+	DEALLOCATE clientCursor;
 
 	-- LOCATION
 	INSERT INTO [orderStar].[location] (country, region, city, storeName, locationID)
@@ -159,7 +238,7 @@ BEGIN
 				, 
 				, (SELECT ) -- order id
 				, (SELECT clientKey FROM [orderStar].[client] WHERE clientID = ord.clientId AND toDate is NULL) -- client key
-				, (SELECT ) -- location key
+				, (SELECT locationKey FROM [orderStar].[location] WHERE locationID = ) -- location key
 				, (SELECT dateKey FROM [orderStar].[date] WHERE dateValue = CAST(ord.orderDate)) -- date key
 		FROM	[oltp].[order] ord
 				JOIN
