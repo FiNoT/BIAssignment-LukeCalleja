@@ -78,7 +78,6 @@ CREATE TABLE [orderStar].[client]
 	, toDate DATE DEFAULT NULL
 	, maritialStatus CHAR(1) NOT NULL
 	, clientID UNIQUEIDENTIFIER NOT NULL
-	, CONSTRAINT client_nat_key UNIQUE(fromDate)
 	, CONSTRAINT client_oltp_id UNIQUE(clientID, fromDate)
 );
 
@@ -100,20 +99,21 @@ CREATE TABLE [orderStar].[location]
 	, region NVARCHAR(50) NOT NULL
 	, city NVARCHAR(100) NOT NULL
 	, storeName NVARCHAR(100) NOT NULL
+	, storeId UNIQUEIDENTIFIER NOT NULL
 	, locationID UNIQUEIDENTIFIER NOT NULL
-	, CONSTRAINT location_nat_key UNIQUE(storeName)
-	, CONSTRAINT location_oltp_id UNIQUE(locationID)
+	, CONSTRAINT location_oltp_id UNIQUE(storeID)
+	--, CONSTRAINT location_oltp_id UNIQUE(locationID)
 );
 
 CREATE TABLE [orderStar].[orderFact]
 (
 	orderKey UNIQUEIDENTIFIER  CONSTRAINT  order_fact_key PRIMARY KEY DEFAULT NEWID()
 	, orderDate DATE NOT NULL
-	, orderTotal NUMERIC(6,2)
+	--, orderTotal NUMERIC(6,2)
 	, locKey UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_LOCATION_key REFERENCES [orderStar].[location] (locationKey)
 	, datKey UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_TIME_key REFERENCES [orderStar].[date] (dateKey)
 	, clieKey UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_CLIENT_key REFERENCES [orderStar].[client] (clientKey)
-	, ordID UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_otp_id UNIQUE
+	, ordID UNIQUEIDENTIFIER NOT NULL CONSTRAINT order_oltp_id UNIQUE
 );
 GO
 
@@ -209,13 +209,14 @@ BEGIN
 	DEALLOCATE clientCursor;
 
 	-- LOCATION
-	INSERT INTO [orderStar].[location] (country, region, city, storeName, locationID)
+	INSERT INTO [orderStar].[location] (country, region, city, storeName, storeID, locationID)
 	(
 		SELECT	DISTINCT cou.countryName
 				, reg.regionName
 				, cty.cityName
 				, sto.storeName
-				, reg.regionId
+				, sto.storeID
+				, cty.cityId
 		FROM	[oltp].[store] sto
 				JOIN
 				[oltp].[city] cty
@@ -232,24 +233,23 @@ BEGIN
 	);
 
 	-- ORDER FACT
-	INSERT INTO [orderStar].[orderFact] (orderDate, orderTotal, ordID, clieKey, locKey, datKey)
+	INSERT INTO [orderStar].[orderFact] (orderDate, ordID, clieKey, locKey, datKey)
 	(
-		SELECT	ord.orderDate
-				, 
-				, (SELECT ) -- order id
+		SELECT	DISTINCT ord.orderDate
+				, ord.orderId -- order id
 				, (SELECT clientKey FROM [orderStar].[client] WHERE clientID = ord.clientId AND toDate is NULL) -- client key
-				, (SELECT locationKey FROM [orderStar].[location] WHERE locationID = ) -- location key
-				, (SELECT dateKey FROM [orderStar].[date] WHERE dateValue = CAST(ord.orderDate)) -- date key
+				, (SELECT locationKey FROM [orderStar].[location] WHERE storeId = ord.storeId)-- location key
+				, (SELECT dateKey FROM [orderStar].[date] WHERE dateValue = CAST(ord.orderDate AS DATE)) -- date key
 		FROM	[oltp].[order] ord
 				JOIN
 				[oltp].[orderItem] oit
 				ON
-				oit.orderId = ord.orderId
-				
+				oit.orderId = ord.orderId				
 	);
 END;
 GO
 
+-- Basic reports from star
 SELECT * FROM [orderStar].[date] ORDER BY yearValue;
 SELECT * FROM [orderStar].[client];
 SELECT * FROM [orderStar].[location];
