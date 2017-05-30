@@ -180,18 +180,6 @@
 <attributeRef>EB78ED3E-9F15-C0F7-E32D-5707BFCF2282</attributeRef>
 </usedAttributes>
 </identifier>
-<identifier id="4BB63785-9CCE-2CE9-24B2-828604B84185" name="Client Natural Key">
-<createdBy>Luke</createdBy>
-<createdTime>2017-05-25 13:14:17 UTC</createdTime>
-<ownerDesignName>Star Schema ERD</ownerDesignName>
-<engineerTo>
-<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
-</engineerTo>
-<newElementsIDs>72241783-4282-057C-9D2F-555BC5382694</newElementsIDs>
-<usedAttributes>
-<attributeRef>72241783-4282-057C-9D2F-555BC5382694</attributeRef>
-</usedAttributes>
-</identifier>
 <identifier id="5160323E-DCC6-087C-0327-8888BF802D31" name="Client OLTP ID">
 <createdBy>Luke</createdBy>
 <createdTime>2017-05-25 13:15:09 UTC</createdTime>
@@ -199,9 +187,10 @@
 <engineerTo>
 <item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
 </engineerTo>
-<newElementsIDs>5C7CF10A-25FA-A289-5C4C-4D4CB33218EC</newElementsIDs>
+<newElementsIDs>5C7CF10A-25FA-A289-5C4C-4D4CB33218EC,72241783-4282-057C-9D2F-555BC5382694</newElementsIDs>
 <usedAttributes>
 <attributeRef>5C7CF10A-25FA-A289-5C4C-4D4CB33218EC</attributeRef>
+<attributeRef>72241783-4282-057C-9D2F-555BC5382694</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

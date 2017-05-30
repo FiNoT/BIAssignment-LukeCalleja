@@ -39,20 +39,6 @@
 <logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="Order Total" id="466F9EED-37AC-D414-7B34-2F9E21451C1D">
-<createdBy>Luke</createdBy>
-<createdTime>2017-05-25 13:33:02 UTC</createdTime>
-<ownerDesignName>Star Schema ERD</ownerDesignName>
-<engineerTo>
-<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>6</dataTypePrecision>
-<dataTypeScale>2</dataTypeScale>
-<ownDataTypeParameters>,6,2</ownDataTypeParameters>
-</Attribute>
 <Attribute name="Order ID" id="AB84C721-8026-2D33-2947-B7CBE8C4A5EB">
 <createdBy>Luke</createdBy>
 <createdTime>2017-05-25 13:34:46 UTC</createdTime>

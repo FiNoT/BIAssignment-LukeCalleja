@@ -79,6 +79,18 @@
 <dataTypeSize>100</dataTypeSize>
 <ownDataTypeParameters>100,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="Store ID" id="C7ED8360-9D5B-8890-C5D7-3F35974288CA">
+<createdBy>Luke</createdBy>
+<createdTime>2017-05-30 12:29:40 UTC</createdTime>
+<ownerDesignName>Star Schema ERD</ownerDesignName>
+<engineerTo>
+<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT057</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="Location ID" id="BD223191-8657-4A6C-F276-1A3AAE7F8635">
 <createdBy>Luke</createdBy>
 <createdTime>2017-05-25 13:20:14 UTC</createdTime>
@@ -105,28 +117,16 @@
 <attributeRef>E031C050-3392-8884-9A52-EAA40814922A</attributeRef>
 </usedAttributes>
 </identifier>
-<identifier id="758496EC-4D84-EBB8-AC17-F4EE60BAFB10" name="Location Natural Key">
+<identifier id="51CA5A12-1713-FA19-E1B7-AA5F30FBE07C" name="Location OLTP ID">
 <createdBy>Luke</createdBy>
-<createdTime>2017-05-25 13:31:14 UTC</createdTime>
+<createdTime>2017-05-30 12:31:16 UTC</createdTime>
 <ownerDesignName>Star Schema ERD</ownerDesignName>
 <engineerTo>
 <item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
 </engineerTo>
-<newElementsIDs>D1D3574C-9DFE-E084-CEC4-C681B79CAC5D</newElementsIDs>
+<newElementsIDs>C7ED8360-9D5B-8890-C5D7-3F35974288CA</newElementsIDs>
 <usedAttributes>
-<attributeRef>D1D3574C-9DFE-E084-CEC4-C681B79CAC5D</attributeRef>
-</usedAttributes>
-</identifier>
-<identifier id="0359C833-64E0-A25A-A470-D6C6F0D07394" name="Location OLTP ID">
-<createdBy>Luke</createdBy>
-<createdTime>2017-05-25 13:31:57 UTC</createdTime>
-<ownerDesignName>Star Schema ERD</ownerDesignName>
-<engineerTo>
-<item key="1ABC6190-9524-7758-55FB-FF57CB833BC7" value="true"/>
-</engineerTo>
-<newElementsIDs>BD223191-8657-4A6C-F276-1A3AAE7F8635</newElementsIDs>
-<usedAttributes>
-<attributeRef>BD223191-8657-4A6C-F276-1A3AAE7F8635</attributeRef>
+<attributeRef>C7ED8360-9D5B-8890-C5D7-3F35974288CA</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>
