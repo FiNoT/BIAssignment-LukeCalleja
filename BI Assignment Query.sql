@@ -8,7 +8,6 @@ DROP PROCEDURE [orderStar].[sp_addClient];
 DROP SCHEMA [orderStar];
 GO
 
--- basic selects
 USE [iict6011a02];
 GO
 
@@ -28,16 +27,19 @@ select * from [oltp].[educationLevel]
 select * from [oltp].[membershipLevel]
 
 -- Checking that data is correct. Total number of clients is 8736
+-- Male and female only
 SELECT  *
 FROM	[oltp].[client]
 WHERE	gender = 'M'
 		OR gender = 'F'
 
+-- Marital status must be married or single
 SELECT	*
 FROM	[oltp].[client]
 WHERE	maritialStatus = 'M'
 		OR maritialStatus = 'S'
 
+-- Realistic date of birth
 SELECT	*
 FROM	[oltp].[client]
 WHERE	dateOfBirth > '1900-01-01'
@@ -49,21 +51,11 @@ FROM	[oltp].[order]
 WHERE	orderDate >= '1997-01-01'
 		AND orderDate <= '1998-12-31'
 
--- OLAP Cube (TBC)
-SELECT	*
-FROM	[oltp].[order]
-WHERE	storeId IN (SELECT	storeId
-					FROM	[oltp].[store]
-					WHERE	cityId IN (SELECT	cityId
-										FROM	[oltp].[city]
-										WHERE	regionId IN (SELECT	regionId
-															FROM	[oltp].[region]
-															WHERE	regionName = 'Guerrero')));
-
 -- Star Schema Creation
 CREATE SCHEMA [orderStar];
 GO
 
+-- Creation of Star
 CREATE TABLE [orderStar].[client]
 (
 	clientKey UNIQUEIDENTIFIER CONSTRAINT client_dim_key PRIMARY KEY DEFAULT NEWID()
@@ -240,17 +232,1071 @@ BEGIN
 				, (SELECT clientKey FROM [orderStar].[client] WHERE clientID = ord.clientId AND toDate is NULL) -- client key
 				, (SELECT locationKey FROM [orderStar].[location] WHERE storeId = ord.storeId)-- location key
 				, (SELECT dateKey FROM [orderStar].[date] WHERE dateValue = CAST(ord.orderDate AS DATE)) -- date key
-		FROM	[oltp].[order] ord
-				JOIN
-				[oltp].[orderItem] oit
-				ON
-				oit.orderId = ord.orderId				
+		FROM	[oltp].[order] ord			
 	);
 END;
 GO
 
 -- Basic reports from star
-SELECT * FROM [orderStar].[date] ORDER BY yearValue;
+SELECT * FROM [orderStar].[date];
 SELECT * FROM [orderStar].[client];
 SELECT * FROM [orderStar].[location];
 SELECT * FROM [orderStar].[orderFact];
+
+-- Counting all the orders for all the quarters and regions
+
+-- BC 1st Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact] 
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- BC 2nd Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact] 
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- BC 3rd Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact] 
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- BC 4th Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact] 
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- BC 1st Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- BC 2nd Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- BC 3rd Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- BC 4th Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'BC')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- DF 1st Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- DF 2nd Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- DF 3rd Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- DF 4th Quarter 1997
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- DF 1st Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- DF 2nd Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+					
+-- DF 3rd Quarter 1998
+SELECT	COUNT(*)
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- DF 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'DF')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- Guerrero 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Guerrero 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Guerrero 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+					
+-- Guerrero 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Guerrero 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Guerrero 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Guerrero 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- Guerrero 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Guerrero')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+					
+-- Jalisco 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Jalisco 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Jalisco 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- Jalisco 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Jalisco 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Jalisco 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Jalisco 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- Jalisco 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Jalisco')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- Mexico 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Mexico 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Mexico 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- Mexico 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Mexico 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Mexico 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Mexico 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+					
+-- Mexico 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Mexico')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- Sinaloa 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Sinaloa 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Sinaloa 3th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- Sinaloa 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Sinaloa 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Sinaloa 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Sinaloa 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- Sinaloa 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Sinaloa')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- Veracruz 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Veracruz 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Veracruz 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+					
+-- Veracruz 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Veracruz 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Veracruz 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Veracruz 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- Veracruz 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Veracruz')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- Yucatan 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Yucatan 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Yucatan 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- Yucatan 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Yucatan 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Yucatan 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Yucatan 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- Yucatan 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Yucatan')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- Zacatecas 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- Zacatecas 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- Zacatecas 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- Zacatecas 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- Zacatecas 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- Zacatecas 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- Zacatecas 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- Zacatecas 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'Zacatecas')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- CA 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- CA 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- CA 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- CA 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- CA 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- CA 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- CA 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- CA 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'CA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- OR 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- OR 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- OR 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- OR 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- OR 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- OR 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- OR 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- OR 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'OR')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
+
+-- WA 1st Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '1');
+
+-- WA 2nd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '2');
+
+-- WA 3rd Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '3');
+
+-- WA 4th Quarter 1997
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1997' AND quarterValue = '4');
+
+-- WA 1st Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '1');
+
+-- WA 2nd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '2');
+
+-- WA 3rd Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '3');
+
+-- WA 4th Quarter 1998
+SELECT	COUNT(*) 
+FROM	[orderStar].[orderFact]
+WHERE	locKey IN (SELECT	locationKey
+					FROM	[orderStar].[location]
+					WHERE	region = 'WA')
+		AND
+		datKey IN (SELECT	dateKey
+					FROM	[orderStar].[date]
+					WHERE	yearValue = '1998' AND quarterValue = '4');
