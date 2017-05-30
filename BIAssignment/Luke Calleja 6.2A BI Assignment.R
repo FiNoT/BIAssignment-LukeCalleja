@@ -24,11 +24,6 @@ city$cityName <- NULL
 order$storeId <- NULL
 
 #Client Cleaning
-client$firstName <- NULL
-client$lastName <- NULL
-client$gender <- NULL
-client$dateOfBirth <- NULL
-client$maritialStatus <- NULL
 client$postCode <- NULL
 client$occupationId <- NULL
 client$levelId <- NULL
@@ -39,3 +34,9 @@ client$childAtHomeCount <- NULL
 client$isHomeOwner <- NULL
 client$accountDate <- NULL
 client$membershipLevelId <- NULL
+
+#Views
+View(region)
+View(city)
+View(order)
+View(client)
